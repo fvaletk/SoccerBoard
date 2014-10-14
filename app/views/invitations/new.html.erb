@@ -1,0 +1,12 @@
+<h2>Send Invitation</h2>
+
+<%= form_for(@invitation) do |f| %>
+
+  <div><%= f.label :recipient_email %><br />
+  <%= f.text_field :recipient_email, autofocus: true %></div>
+  </br>
+  <div><%= f.label :team %></br>
+  <%= f.select(:team_id, current_user.teams.all.collect {|t| [ t.team_name, t.id ] })%></div>
+  </br>
+  <div><%= f.submit "Send Invitation" %></div>
+<% end %>

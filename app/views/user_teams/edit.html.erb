@@ -1,0 +1,14 @@
+<h2>Edit Player Profile</h2>
+
+<%= form_for(@user_team) do |f| %>
+
+  <div><%= f.label :nickname %><br />
+  <%= f.text_field :nickname, autofocus: true %></div>
+  
+   <div><%= f.label :t_shirt_number %><br />
+  <%= f.text_field :t_shirt_number%></div>
+
+  <div><%= f.submit "Update Player Profile" %></div>
+<% end %>
+
+<%= link_to "Back", :back %>

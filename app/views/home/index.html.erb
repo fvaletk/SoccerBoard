@@ -1,0 +1,59 @@
+<h1>Home</h1>
+<% if current_user %>
+    Welcome <%= current_user.email %> <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+    </br>
+    <%= link_to 'Edit Profile',edit_user_registration_path %>
+    </br>
+    <%= link_to 'Create a Team',new_team_path %>
+    </br>
+    <% if current_user.have_teams? %>
+      <%= link_to 'Invite a Friend', new_invitation_path%>
+    <% end %>
+    </br>
+
+    <h4>Teams you Own</h4>
+    <% if current_user.have_teams? %>
+       <% current_user.get_teams.each  do |t| %>
+          <%= link_to t.team_name, team_path(t) %>
+          </br>
+       <% end %>
+    <% else %>
+        <p>You don't own a team</p>
+    <% end %>
+    </br>
+
+    <h4>Teams you Play on</h4>
+    <% if current_user.play_on_teams? %>
+        <% current_user.get_play_teams.each  do |t| %>
+          <%= link_to t.team_name, team_path(t) %>
+          </br>
+       <% end %>
+    <% else %>
+        <p>You don't play on a team currently</p>
+    <% end %>
+    </br>
+
+    <% if current_user.have_teams? %>
+      <h4>Sent Invitations</h4>
+      <% current_user.get_sent_invitations.each  do |i| %>
+          <p><%= i.recipient_email%> have <span class=<%= i.status %>> <%= i.status %></span> your invitation to join the <%= Team.get_team_name(i.team_id)%> Team</p>
+       <% end %>
+    <% end %>
+    </br>
+
+    <h4>Pending Invitations</h4>
+    <% if User.have_invitations?(current_user.email) %>
+      <% User.get_invitations(current_user.email).each  do |i| %>
+          <p>You have been invited to join the <%= Team.get_team_name(i.team_id) %> Team. <%= link_to "Accept", new_user_team_path("accept",i.token) %> or <%= link_to "Decline", new_user_team_path("decline",i.token) %> </p>
+       <% end %>
+    <% else %>
+        <p>You don't have invitations</p>
+    <% end %>
+
+<% else %>
+    <%= link_to 'Login', new_user_session_path %>
+    </br>
+    <%= link_to 'Sign Up', new_user_registration_path %>
+<% end %>
+
+

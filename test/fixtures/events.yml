@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  team_id: 1
+  subject: MyString
+  description: MyText
+  date: 2014-10-13 12:27:22
+  toke: MyString
+
+two:
+  user_id: 1
+  team_id: 1
+  subject: MyString
+  description: MyText
+  date: 2014-10-13 12:27:22
+  toke: MyString

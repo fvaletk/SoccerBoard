@@ -1,0 +1,24 @@
+<h2>Create Team</h2>
+
+<%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+<% if !current_user.have_teams? %>
+   <p>As you don't belong to a team, is mandatory for you to at least create one</p>	
+<% end %>
+
+<%= form_for(@team) do |f| %>
+
+  <div><%= f.label :team_name %><br />
+  <%= f.text_field :team_name, autofocus: true %></div>
+
+  <%= fields_for (@user_team) do |ff|%>
+
+    <div><%= ff.label :t_shirt_number %><br />
+    <%= ff.text_field :t_shirt_number %></div>
+
+    <div><%= ff.label :nickname %><br />
+    <%= ff.text_field :nickname %></div>
+
+  <% end %>
+
+  <div><%= f.submit "Create Team" %></div>
+<% end %>

@@ -1,0 +1,28 @@
+<h2>Player Registration</h2>
+
+<%= form_for @user, url: {controller: "guests", action:"create"} do |f| %>
+
+  <div><%= f.label :first_name %><br />
+  <%= f.text_field :first_name, autofocus: true %></div>
+
+  <div><%= f.label :last_name %><br />
+  <%= f.text_field :last_name %></div>
+
+  <div><%= f.label :password %> <% if @validatable %><i>(<%= @minimum_password_length %> characters minimum)</i><% end %><br />
+    <%= f.password_field :password, autocomplete: "off" %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+
+  <%= fields_for @user_team, url: {controller: "guests", action:"create"} do |ff|%>
+
+    <div><%= ff.label :t_shirt_number %><br />
+    <%= ff.text_field :t_shirt_number %></div>
+
+    <div><%= ff.label :nickname %><br />
+    <%= ff.text_field :nickname %></div>
+
+  <% end %>
+
+  <div><%= f.submit "Finish Registration" %></div>
+<% end %>

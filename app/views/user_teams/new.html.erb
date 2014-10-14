@@ -1,0 +1,28 @@
+<h2>Create Team Player</h2>
+
+<%= form_for(@user_team) do |f| %>
+
+	<% if @user %>
+		<%= fields_for (@user) do |ff|%>
+			<div><%= ff.label :first_name %><br />
+			<%= ff.text_field :first_name%></div>
+
+			<div><%= ff.label :last_name %><br />
+			<%= ff.text_field :last_name %></div>
+
+			<div><%= ff.label :password %> <% if @validatable %><i>(<%= @minimum_password_length %> characters minimum)</i><% end %><br />
+    		<%= ff.password_field :password, autocomplete: "off" %></div>
+
+  			<div><%= ff.label :password_confirmation %><br />
+    		<%= ff.password_field :password_confirmation, autocomplete: "off" %></div>
+		<% end %>
+	<% end %>
+
+	<div><%= f.label :t_shirt_number %><br />
+	<%= f.text_field :t_shirt_number%></div>
+
+	<div><%= f.label :nickname %><br />
+	<%= f.text_field :nickname %></div>	
+
+  <div><%= f.submit "Create player" %></div>
+<% end %>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Soccer Board </h1>
+    <p>
+      Hi, <%= @team_owner %> wants to invite you to be part of the <%= @team_name %> Team.<br>
+    </p>
+    <p>To accept the invitation, just follow this link: <%= link_to 'Accept Invitation', @acceptance_url%>.</p>
+    <p>To decline the invitation, please click in the link: <%= link_to 'Decline Invitation', @declining_url%>.</p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

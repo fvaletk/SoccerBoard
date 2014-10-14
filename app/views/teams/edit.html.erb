@@ -1,0 +1,13 @@
+<h2>Edit Team</h2>
+
+<%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+</br>
+<%= link_to 'Back To Team', team_path(@team)%>
+
+<%= form_for(@team) do |f| %>
+
+  <div><%= f.label :team_name %><br />
+  <%= f.text_field :team_name, autofocus: true %></div>
+
+  <div><%= f.submit "Update Team" %></div>
+<% end %>
