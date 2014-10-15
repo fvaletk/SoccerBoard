@@ -2,13 +2,15 @@ class Event < ActiveRecord::Base
 
 	belongs_to :user
 	belongs_to :team
-	has_many :event_participants
+	has_many :event_participants, dependent: :destroy
 
 	validates :user_id, presence: true
 	validates :team_id, presence: true
 	validates :subject, presence: true
 	validates :description, presence: true
 	validates :date, presence: true
+	validates :latitude, presence: true
+	validates :longitude, presence: true
 
 	before_create :generate_token
 
@@ -25,7 +27,7 @@ class Event < ActiveRecord::Base
 	end
 
 	def user_already_registered?(user_id)
-		self.event_participants.where(user_id: user_id) != nil ? true : false 
+		self.event_participants.where(user_id: user_id).empty? ? false : true
 	end
 
 end

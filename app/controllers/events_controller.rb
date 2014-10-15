@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
 
 	 before_filter :authenticate_user!, :only => [:show, :new, :create, :edit, :update]
+	 before_filter :set_event_value, :only => [:edit,:update,:destroy]
 
 	def index
 		redirect_to root_path	
@@ -13,29 +14,45 @@ class EventsController < ApplicationController
 
 	def new
 		@event = Event.new
-		@team_id = params[:team_id]
-		@@global_team = Team.find(@team_id)
-		if !current_user.have_teams?
-			flash[:danger] = "You don't have teams"
-			redirect_to root_path
-		end
 	end
 
 	def create
 		event = Event.new(event_params)
 		event.user_id = current_user.id
-		event.team_id = @@global_team.id
 		event.date = event.date.utc - Time.zone_offset("COT")
+		team = Team.find(event.team_id)
 
 		if event.save	
-			 UserMailer.event_invitation(@@global_team.get_players, @@global_team.team_name, event).deliver	
+			 UserMailer.event_invitation(team.get_players, team.team_name, event).deliver	
 		   flash[:success] = "Event Created Successfully"
-		   redirect_to team_path(@@global_team.id)
+		   redirect_to team_path(team.id)
 		else
 		   flash[:danger] = "Error creating the event"
-		   redirect_to :action => :new, :team_id => @@global_team.id
+		   redirect_to :action => :new
 		end
+	end
 
+	def edit
+	end
+
+	def update
+		if @event.update(event_params)
+			 flash[:success] = "Event Updated Successfully"
+		   redirect_to team_path(@event.team_id)
+		else
+			 flash[:danger] = "Error updating the event"
+		   redirect_to :action => :edit
+		end
+	end
+
+	def destroy
+			team_id = @event.team_id
+			if @event.destroy
+				flash[:success] = "Event deleted Successfully"
+		  else
+		  	flash[:danger] = "Error deleting the event"
+			end
+			redirect_to team_path(team_id)
 	end
 
 	private
@@ -43,4 +60,7 @@ class EventsController < ApplicationController
 			params.require(:event).permit(:team_id,:subject,:date,:description, :latitude, :longitude)
 		end
 
+		def set_event_value
+			@event = Event.find(params[:id])
+		end
 end

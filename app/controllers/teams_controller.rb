@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
 
   before_filter :authenticate_user!, :only => [:new, :create, :edit, :update]
-  before_filter :set_team, :only => [:edit, :update]
+  before_filter :set_team, :only => [:edit, :update, :destroy]
 
   def index
     redirect_to root_path
@@ -47,6 +47,16 @@ class TeamsController < ApplicationController
         flash[:danger] = team.errors.full_messages.to_sentence
         redirect_to :action=> 'edit', :id => @team.id
     end
+  end
+
+  def destroy
+     if @team.destroy
+       flash[:success] = "Team deleted Successfully"
+       redirect_to root_path
+     else
+       flash[:danger] = "Error deleting the Team"
+       redirect_to team_path(@team) 
+     end
   end
 
   private 

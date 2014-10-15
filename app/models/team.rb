@@ -1,9 +1,9 @@
 class Team < ActiveRecord::Base
 
-  has_many :user_teams
+  has_many :user_teams, dependent: :destroy
   has_many :users, through: :user_teams
-  has_many :invitations
-  has_many :events
+  has_many :invitations, dependent: :destroy
+  has_many :events, dependent: :destroy
 
   validates :team_name, presence: true
 

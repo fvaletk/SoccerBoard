@@ -8,13 +8,11 @@
 <% if @team.is_owner?(current_user.id) %>
   <%= link_to "Edit Team Name", edit_team_path(@team)%>
   </br>
+  <%= link_to "Delete Team", team_path(@team), data: { confirm: "Are you sure you want to delete the Team ?" }, method: :delete%>
+  </br>
 <% end %>
 <p><strong>Team Players:</strong></p>
 <% if @team.have_players?  %>
-    <% if @team.is_owner?(current_user.id)%>
-      <%= link_to 'Create Event', new_event_path(@team.id)%>
-      </br>
-    <% end %>
   <% @team.get_players.each do |p| %>
      <%= 'Name: '+ " " + p.first_name + " " + p.last_name.to_s+ " --- "%>
      <%= 'Nickname: '+ " " +p.get_info(p.id, @team.id,"nickname").to_s + " --- "%>
@@ -27,7 +25,11 @@
 <h4>Events</h4>
 <% if @team.have_events? %>
 	<% @team.events.each do |e| %>
-	<p><strong>Event: </strong> "<%= link_to e.subject.titleize, event_path(e.id) %>", expected to be on <strong><%= e.date %></strong></p>
+	<p><strong>Event: </strong> "<%= link_to e.subject.titleize, event_path(e.id) %>", expected to be on <strong><%= e.date %></strong>
+  <% if @team.is_owner?(current_user.id) %>
+    <%= link_to "Edit Event", edit_event_path(e.id)%> - <%= link_to "Delete Event", event_path(e.id), data: { confirm: "Are you sure?" }, method: :delete%>
+  <% end %>
+  </p>
 	<% end %>
 <% else %>
 	<p>No events were found</p>

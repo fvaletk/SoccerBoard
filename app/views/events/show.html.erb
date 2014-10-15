@@ -2,15 +2,19 @@
 
 <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
 
+<% if  @has_expired  %>  
+  <h3><strong>This event has expired</strong></h3>
+<% end %>
+
 <div> 
 <p><strong>Title</strong> <%= @event.subject %></p> 
 <p><strong>Date</strong> <%= @event.date %></p> 
 <p><strong>Description</strong> </br> <%= @event.description %></p>
 
-<% if  @has_expired  %>  
-  <p>This event has expired</p>
-<% end %>
-
+</br>
+  <img id="map-image" src="http://maps.googleapis.com/maps/api/staticmap?center=<%= @event.latitude%>,<%= @event.longitude %>&zoom=17&size=600x300&maptype=roadmap
+&markers=color:red%7Clabel:P%7C<%= @event.latitude%>,<%= @event.longitude %>&sensor=false"></img>
+</br>
 
 <% if !current_user.owner_team?(@event.team_id) && !@event.user_already_registered?(current_user.id) %>
     <% if !@has_expired %>
@@ -19,11 +23,13 @@
       <%= link_to "Decline", create_event_participant_path(:decision => "decline", :event_token => @event.token)  %>
     <% end %>
 <% end %>
+
   
 <h4>Parcipants</h4>
 <% if @event.have_participants? %>
     <% @event.event_participants.each do |p| %>
        <%= User.full_name(p.user_id).to_s+", "+p.status.to_s %> 
+       </br>
     <% end %>
 <% else %>
     <p>This event has no participants.</p>

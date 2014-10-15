@@ -1,10 +1,9 @@
-<script type="text/javascript">google.maps.event.addDomListener(window, 'page:load', initialize("new",null,null));</script>
 
-<h2>Create Event</h2>
+<h2>Edit Event</h2>
 
 <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
 </br>
-<%= link_to 'Back', root_path%>
+<%= link_to 'Back to Team', team_path(@event.team_id)%>
 
 
 <%= form_for(@event) do |f| %>
@@ -30,7 +29,7 @@
   <div id="map-canvas"></div>
   </br>
 
-  <div><%= f.submit "Create Event" %></div>
-  </br>
+  <div><%= f.submit "Update Event" %></div>
+  <script type="text/javascript">google.maps.event.addDomListener(window, 'page:load', 
+  initialize("edit", document.getElementById("event_latitude").value , document.getElementById("event_longitude").value ));</script>
 <% end %>
-

@@ -20,7 +20,7 @@
 //Google Maps Code
 var markers = [];
 
-function initialize() {
+function initialize(action, lat, lon) {
   var mapOptions = {
     zoom: 12,
     //center: new google.maps.LatLng(-25.363882,131.044922)
@@ -32,20 +32,40 @@ function initialize() {
       placeMarker(e.latLng, map);
     });
 
-  // Try HTML5 geolocation
-  if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      map.setCenter(pos);
+    if(action=="new")
+    {
+        // Try HTML5 geolocation
+      if(navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          map.setCenter(pos);
 
-      }, 
-      function() {
-        handleNoGeolocation(true);
-      });
-    } else {
-      // Browser doesn't support Geolocation
-      handleNoGeolocation(false);
+          }, 
+          function() {
+            handleNoGeolocation(true);
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleNoGeolocation(false);
+        }
     }
+    else
+    {
+      if(action=="edit")
+      {
+        console.log("lat "+lat)
+        console.log("lon "+lon)
+        position = new google.maps.LatLng(lat,lon)
+        var marker = new google.maps.Marker({
+          position: position,
+          map: map
+        });
+        map.panTo(position);
+        markers.push(marker);
+      }
+    }
+
+  
   }
 
   function handleNoGeolocation(errorFlag) {
@@ -95,5 +115,10 @@ function deleteMarkers() {
   markers = [];
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+function test(a,b)
+{
+  console.log("Printing "+a+" and "+b)
+}
+
+//google.maps.event.addDomListener(window, 'load', initialize);
 
