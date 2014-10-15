@@ -21,14 +21,18 @@ class EventsController < ApplicationController
 		event.user_id = current_user.id
 		event.date = event.date.utc - Time.zone_offset("COT")
 		team = Team.find(event.team_id)
-
-		if event.save	
-			 UserMailer.event_invitation(team.get_players, team.team_name, event).deliver	
-		   flash[:success] = "Event Created Successfully"
-		   redirect_to team_path(team.id)
+		if team.have_players?
+			if event.save	
+				 UserMailer.event_invitation(team.get_players, team.team_name, event).deliver	
+			   flash[:success] = "Event Created Successfully"
+			   redirect_to team_path(team.id)
+			else
+			   flash[:danger] = "Error creating the event"
+			   redirect_to :action => :new
+			end
 		else
-		   flash[:danger] = "Error creating the event"
-		   redirect_to :action => :new
+			flash[:danger] = "The "+team.team_name+" Team doesn't have players"
+			redirect_to :action => :new
 		end
 	end
 

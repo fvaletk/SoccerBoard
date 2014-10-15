@@ -26,7 +26,16 @@ class UserMailer < ActionMailer::Base
       end
 
       mail(to: players_emails, subject: @team_name.titleize + ' Event')
-  	
+  end
+
+  def owner_invitation(player_email,team_name)
+    
+      @acceptance_url = "http://127.0.0.1:3000/event_participants/create/accept/"+event.token
+      @declining_url = "http://127.0.0.1:3000/event_participants/create/decline/"+event.token
+      @team_name = team_name
+  
+
+      mail(to: player_email, subject: @team_name.titleize + ' Ownership')
   end
 
 end

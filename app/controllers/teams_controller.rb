@@ -59,6 +59,30 @@ class TeamsController < ApplicationController
      end
   end
 
+  def transfer_team_ownership    
+  end
+
+  def send_possible_owner_invitation
+    UserMailer.player_invitation(invitation.recipient_email, Team.find(invitation.team_id).team_name, owner, invitation.token).deliver 
+  end
+
+  def update_team_ownership
+    player_id = params[:player_id]
+    team_id = params[:team_id]
+
+    if Team.user_belongs_to_team?(player_id,team_id)
+      team = Team.find(team_id)
+      if team.update(user_id: player.id)
+        flash[:success] = "Congratulations your are new owner of Team "+team.team_name
+      else
+        flash[:danger] = "Error transfering ownership"
+      end
+    else
+      flash[:danger] = "You don't belong to Team "+team.team_name
+    end
+      redirect_to root_path
+  end
+
   private 
     def team_params
       params.require(:team).permit(:team_name)

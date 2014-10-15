@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Soccer Board Ownership transfer</h1>
+    <p>
+      Hi, The owner of Team <%= @team_name %> is proposing you to become the new owner<br>
+    </p>
+     
+    <p>To accept the proposition, just follow this link: <%= link_to 'Accept Invitation', @acceptance_url%>.</p>
+    <p>To decline the proposition, please click in the link: <%= link_to 'Decline Invitation', @declining_url%>.</p>
+  </body>
+</html>

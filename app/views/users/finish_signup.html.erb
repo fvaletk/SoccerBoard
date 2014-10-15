@@ -1,0 +1,23 @@
+
+  <h1>Finish Your Registration</h1>
+
+  <%= form_for(current_user, :as => 'user', :url => finish_signup_path(current_user), :html => { role: 'form'}) do |f| %>
+    <% if @show_errors && current_user.errors.any? %>
+      <div id="error_explanation">
+        <% current_user.errors.full_messages.each do |msg| %>
+          <%= msg %><br>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div><%= f.label :first_name %></br>
+        <%= f.text_field :first_name, :autofocus => true %></div>
+
+    <div><%= f.label :last_name %></br>
+        <%= f.text_field :last_name  %></div>
+    
+    <div><%= f.label :email %></br>
+        <%= f.text_field :email %></div>
+  
+      <%= f.submit 'Continue' %>
+  <% end %>

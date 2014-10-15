@@ -11,4 +11,13 @@ class ApplicationController < ActionController::Base
             devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name,:last_name, :email, :password) }
             devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:first_name, :last_name, :email, :password, :current_password) }
         end
+
+    def ensure_signup_complete
+      return if action_name == 'finish_signup'
+
+      if current_user && !current_user.email_verified?
+        redirect_to finish_signup_path(current_user)
+      end
+    end
+
 end

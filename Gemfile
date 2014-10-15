@@ -10,6 +10,10 @@ gem 'devise'
 
 gem 'pry-rails', :group => :development
 
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+
 gem 'bootstrap-sass'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'

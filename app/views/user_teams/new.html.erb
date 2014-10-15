@@ -22,7 +22,16 @@
 	<%= f.text_field :t_shirt_number%></div>
 
 	<div><%= f.label :nickname %><br />
-	<%= f.text_field :nickname %></div>	
+	<%= f.text_field :nickname %></div>
+
+  <% if @invitation %>
+    <%= fields_for(@invitation) do |i| %>
+      <div>
+        <%= i.hidden_field :id, :value => @invitation.id%>
+      </div>    
+    <% end %>
+  <% end %>  
+   
 
   <div><%= f.submit "Create player" %></div>
 <% end %>

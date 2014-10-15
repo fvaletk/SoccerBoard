@@ -37,9 +37,13 @@
 
     <% if current_user.have_teams? %>
       <h4>Sent Invitations</h4>
-      <% current_user.get_sent_invitations.each  do |i| %>
-          <p><%= i.recipient_email%> have <span class=<%= i.status %>> <%= i.status %></span> your invitation to join the <%= Team.get_team_name(i.team_id)%> Team</p>
-       <% end %>
+      <% if !current_user.get_sent_invitations.empty? %>
+          <% current_user.get_sent_invitations.each  do |i| %>
+            <p><%= i.recipient_email%> have <span class=<%= i.status %>> <%= i.status %></span> your invitation to join the <%= Team.get_team_name(i.team_id)%> Team</p>
+          <% end %>
+      <% else %>
+        <p>You haven't sent invitations</p>
+      <% end %>
     <% end %>
     </br>
 
@@ -56,6 +60,10 @@
     <%= link_to 'Login', new_user_session_path %>
     </br>
     <%= link_to 'Sign Up', new_user_registration_path %>
+    </br>
+    <%= link_to 'Sign In with Facebook', user_omniauth_authorize_path("facebook") %>
+    </br>
+    <%= link_to 'Sign In with Twitter', user_omniauth_authorize_path(provider: "twitter") %>
 <% end %>
 
 
