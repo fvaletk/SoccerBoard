@@ -19,8 +19,9 @@ class EventsController < ApplicationController
 	def create
 		event = Event.new(event_params)
 		event.user_id = current_user.id
-		#event.date = event.date.utc - Time.zone_offset("COT")
-		event.date = event.date.in_time_zone
+		event.date = event.date.utc - Time.zone_offset("COT")
+		#event.date = event.date.to_time
+		binding.pry
 		team = Team.find(event.team_id)
 		if team.have_players?
 			if event.save	
