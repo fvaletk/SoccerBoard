@@ -1,15 +1,14 @@
 class UserMailer < ActionMailer::Base
   
   default from: "from@example.com"
+  @url = "ktraining.herokuapp.com"
+
 
   def player_invitation(recipient_email, team_name, team_owner,token)
     #ktraining.herokuapp.com
 
-    #@acceptance_url = "http://127.0.0.1:3000/user_teams/new/accept/"+token
-    #@declining_url = "http://127.0.0.1:3000/user_teams/new/decline/"+token
-
-    @acceptance_url = "http://ktraining.herokuapp.com/user_teams/new/accept/"+token
-    @declining_url = "http://ktraining.herokuapp.com/user_teams/new/decline/"+token
+    @acceptance_url = "http://#{@url}/user_teams/new/accept/"+token
+    @declining_url = "http://#{@url}/user_teams/new/decline/"+token
 
     @team_name = team_name
     @team_owner = team_owner
@@ -18,11 +17,8 @@ class UserMailer < ActionMailer::Base
 
   def event_invitation(players, team_name, event)
   	
-    	# @acceptance_url = "http://127.0.0.1:3000/event_participants/create/accept/"+event.token
-     #  @declining_url = "http://127.0.0.1:3000/event_participants/create/decline/"+event.token
-
-     @acceptance_url = "http://ktraining.herokuapp.com/event_participants/create/accept/"+event.token
-     @declining_url = "http://ktraining.herokuapp.com/event_participants/create/decline/"+event.token
+    	@acceptance_url = "http://#{@url}/event_participants/create/accept/"+event.token
+      @declining_url = "http://#{@url}/event_participants/create/decline/"+event.token
 
       @team_name = team_name
       @event = event
@@ -38,11 +34,8 @@ class UserMailer < ActionMailer::Base
 
   def owner_invitation(player_email,team_name,token)
     
-      # @acceptance_url = "http://127.0.0.1:3000/transfer_ownerships/update/accept/"+token
-      # @declining_url = "http://127.0.0.1:3000/transfer_ownerships/update/decline/"+token
-
-      @acceptance_url = "http://ktraining.herokuapp.com/transfer_ownerships/update/accept/"+token
-      @declining_url = "http://ktraining.herokuapp.com/transfer_ownerships/update/decline/"+token
+      @acceptance_url = "http://#{@url}/transfer_ownerships/update/accept/"+token
+      @declining_url = "http://#{@url}/transfer_ownerships/update/decline/"+token
 
       @team_name = team_name
   
