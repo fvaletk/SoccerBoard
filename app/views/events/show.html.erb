@@ -25,7 +25,7 @@
 <% end %>
 
   
-<h4>Parcipants</h4>
+<h4>Participants</h4>
 <% if @event.have_participants? %>
     <% @event.event_participants.each do |p| %>
        <%= User.full_name(p.user_id).to_s+", "+p.status.to_s %> 
