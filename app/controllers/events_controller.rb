@@ -21,7 +21,6 @@ class EventsController < ApplicationController
 		event.user_id = current_user.id
 		event.date = event.date.utc - Time.zone_offset("COT")
 		#event.date = event.date.to_time
-		binding.pry
 		team = Team.find(event.team_id)
 		if team.have_players?
 			if event.save	
