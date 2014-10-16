@@ -32,7 +32,7 @@ class EventsController < ApplicationController
 			end
 		else
 			flash[:danger] = "The "+team.team_name+" Team doesn't have players"
-			redirect_to :action => :new
+			redirect_to team_path(team.id)
 		end
 	end
 
