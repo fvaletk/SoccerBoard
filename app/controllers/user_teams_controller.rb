@@ -32,7 +32,7 @@ class UserTeamsController < ApplicationController
   def create
     user_team = UserTeam.new(user_team_params)
     invitation = Invitation.find(invitation_param[:id])
-    binding.pry
+    
 
     if User.find_by(email: invitation.recipient_email) != nil
       user = User.find_by(email: invitation.recipient_email)

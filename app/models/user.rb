@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :teams, through: :user_teams
   has_many :invitations
   has_many :event_participants
+  has_many :transfer_ownerships
 
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/

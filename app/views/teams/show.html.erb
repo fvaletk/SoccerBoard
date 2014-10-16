@@ -17,6 +17,9 @@
      <%= 'Name: '+ " " + p.first_name + " " + p.last_name.to_s+ " --- "%>
      <%= 'Nickname: '+ " " +p.get_info(p.id, @team.id,"nickname").to_s + " --- "%>
      <%= 'T Shirt Number: '+ " "+ p.get_info(p.id, @team.id,"t_shirt_number").to_s%>
+     <% if @team.is_owner?(current_user.id) %>
+       <%= link_to "Transfer Team Ownership", create_transfer_ownership_path(:team_id => @team.id, :user_id => p.id) %>
+     <% end %>
      </br>
   <% end %>
 <% else %>

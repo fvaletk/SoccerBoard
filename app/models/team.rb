@@ -4,6 +4,7 @@ class Team < ActiveRecord::Base
   has_many :users, through: :user_teams
   has_many :invitations, dependent: :destroy
   has_many :events, dependent: :destroy
+  has_many :transfer_ownerships, dependent: :destroy
 
   validates :team_name, presence: true
 
