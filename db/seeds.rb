@@ -12,3 +12,4 @@ UserTeam.destroy_all
 Invitation.destroy_all
 Event.destroy_all
 EventParticipant.destroy_all
+Identity.destroy_all

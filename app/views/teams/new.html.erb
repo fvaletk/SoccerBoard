@@ -10,7 +10,7 @@
   <div><%= f.label :team_name %><br />
   <%= f.text_field :team_name, autofocus: true %></div>
 
-  <%= fields_for (@user_team) do |ff|%>
+  <%= f.fields_for :user_teams do |ff|%>
 
     <div><%= ff.label :t_shirt_number %><br />
     <%= ff.text_field :t_shirt_number %></div>

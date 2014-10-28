@@ -1,12 +1,16 @@
 class Team < ActiveRecord::Base
 
+  belongs_to :user
   has_many :user_teams, dependent: :destroy
+  accepts_nested_attributes_for :user_teams,:reject_if => :all_blank
+
   has_many :users, through: :user_teams
   has_many :invitations, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :transfer_ownerships, dependent: :destroy
 
-  validates :team_name, presence: true
+  validates :team_name, presence: true, uniqueness: true
+  validates :user_id, presence: true
 
   def get_owners_name(user_id)
       name = User.find(user_id).first_name+" "+User.find(user_id).last_name

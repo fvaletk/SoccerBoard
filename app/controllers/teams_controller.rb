@@ -1,38 +1,28 @@
 class TeamsController < ApplicationController
 
   before_filter :authenticate_user!, :only => [:new, :create, :edit, :update]
-  before_filter :set_team, :only => [:edit, :update, :destroy]
+  before_filter :set_team, :only => [:show, :edit, :update, :destroy]
 
   def index
     redirect_to root_path
   end
 
   def show
-    @team = Team.find(params[:id])
   end
 
   def new
     @team = Team.new
-    @user_team = UserTeam.new
+    @team.user_teams.build
   end
 
   def create
-    team = Team.new(team_params)
-    team[:user_id] = current_user.id
+    team = Team.new(team_nested_params)
     if team.save
-      user_team = UserTeam.new(user_team_params)
-      user_team.user_id = current_user.id
-      user_team.team_id = team.id
-      if user_team.save
-          flash[:success] = "Team created Successfully"
-          redirect_to root_path
-      else
-        flash[:danger] = user_team.errors.full_messages.to_sentence
-        render 'new'
-      end  
+      flash[:success] = "Team created Successfully"
+      redirect_to root_path 
     else
       flash[:danger] = team.errors.full_messages.to_sentence
-      render 'new'
+      redirect_to :action=>'new'
     end
   end
 
@@ -60,15 +50,19 @@ class TeamsController < ApplicationController
   end
 
   private 
-    def team_params
-      params.require(:team).permit(:team_name)
+    def team_nested_params
+      @team_attributes = params.require(:team).permit(:team_name, user_teams_attributes: [:t_shirt_number, :nickname])
+
+      @team_attributes[:user_id] = current_user.id
+      @team_attributes[:user_teams_attributes]["0"][:user_id] = current_user.id
+      @team_attributes
     end
 
-    def user_team_params
-      params.require(:user_team).permit(:t_shirt_number, :nickname)
+    def team_params
+      params.require(:team).permit(:team_name, user_teams_attributes: [:t_shirt_number, :nickname])
     end
 
     def set_team
-        @team = Team.find(params[:id])      
+      @team = Team.find(params[:id])
     end
 end
